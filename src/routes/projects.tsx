@@ -52,7 +52,8 @@ function ProjectsBrowser() {
           </p>
           <div className="mt-8 flex items-center gap-4">
             <Link
-              to="/gallery"
+              to="/projects/$slug"
+              params={{ slug: featured.slug }}
               className="inline-flex items-center gap-3 bg-foreground px-8 py-4 text-[12px] font-bold uppercase tracking-[0.3em] text-background transition-colors hover:bg-gold hover:text-background"
             >
               <PlayCircle className="h-5 w-5" /> Play Showreel
@@ -87,7 +88,8 @@ function ProjectsBrowser() {
             {filteredProjects.map((project, idx) => (
               <Link 
                 key={project.id} 
-                to="/gallery" 
+                to="/projects/$slug" 
+                params={{ slug: project.slug }}
                 className="group relative flex aspect-[16/10] flex-col overflow-hidden rounded-md bg-surface shadow-cinematic transition-all duration-500 hover:scale-[1.02] hover:shadow-hover hover:z-10 focus:outline-none focus:ring-2 focus:ring-gold"
               >
                 <img

@@ -31,7 +31,7 @@ export const PROJECTS: Project[] = [
     description: "A cinematic exploration of power, luxury and the beauty hidden in the shadows. Shot entirely at night using only available street lighting and custom-built LED arrays.",
     thumbnail: proj1,
     poster: proj1,
-    heroVideo: undefined,
+    heroVideo: "/video.mp4",
     galleryImages: [proj1, proj2, proj3, heroImg],
     credits: [
       { role: "Director", name: "Alex Morgan" },
