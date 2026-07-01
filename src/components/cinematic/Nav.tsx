@@ -69,7 +69,7 @@ export function Nav() {
           
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 border border-gold/60 px-5 py-2.5 text-[11px] uppercase tracking-[0.3em] text-gold transition hover:bg-gold hover:text-background"
+            className="inline-flex items-center gap-2 border border-gold/60 px-5 py-2.5 text-[11px] uppercase tracking-[0.3em] text-gold transition hover:bg-gold hover:text-primary-foreground"
           >
             Book Consultation
           </Link>
@@ -125,7 +125,7 @@ export function Nav() {
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="inline-flex w-full items-center justify-center gap-2 border border-gold/60 px-5 py-3 text-[11px] uppercase tracking-[0.3em] text-gold transition hover:bg-gold hover:text-background"
+              className="inline-flex w-full items-center justify-center gap-2 border border-gold/60 px-5 py-3 text-[11px] uppercase tracking-[0.3em] text-gold transition hover:bg-gold hover:text-primary-foreground"
             >
               Book Consultation
             </Link>

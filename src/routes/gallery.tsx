@@ -3,8 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { GALLERY_IMAGES } from "@/data/gallery";
 import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
-// Serve the video from the public folder to avoid git/build limits
-const bgVideo = "/video.mp4";
+// Temporarily use an external placeholder URL to fix Vercel build
+const bgVideo = "https://cdn.coverr.co/videos/coverr-dark-abstract-background-2741/1080p.mp4";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({

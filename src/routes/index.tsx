@@ -99,7 +99,8 @@ function Hero() {
           HAVILAH
         </h1>
         <p className="font-serif mt-8 max-w-2xl text-lg italic text-foreground/85 md:text-2xl">
-          We are an independent production house specializing in cinematic brand storytelling.
+          <span ref={taglineRef} />
+          <span className="ml-1 inline-block h-5 w-px animate-pulse bg-gold align-middle" />
         </p>
         <div className="mt-12 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <MagneticButton variant="primary">
@@ -231,6 +232,26 @@ function FeaturedProjects() {
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (!sectionRef.current || !trackRef.current) return;
+    const ctx = gsap.context(() => {
+      const track = trackRef.current!;
+      const scrollAmount = track.scrollWidth - window.innerWidth + 80;
+      gsap.to(track, {
+        x: -scrollAmount,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: () => `+=${scrollAmount}`,
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section ref={sectionRef} className="relative overflow-hidden bg-background">
       <div className="absolute left-6 top-32 z-10 lg:left-12">
@@ -239,26 +260,22 @@ function FeaturedProjects() {
           The <span className="gradient-gold-text">Reel.</span>
         </h2>
       </div>
-      <div className="relative mx-auto mt-20 max-w-[1500px]">
-        {/* Horizontal scroll container */}
-        <div 
-          ref={trackRef} 
-          className="flex w-full snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-12 scrollbar-none md:gap-12 lg:px-12"
-        >
-          {PROJECTS.filter(p => p.featured).map((p, i) => (
+      <div className="h-[100svh] flex items-center">
+        <div ref={trackRef} className="flex gap-8 pl-6 lg:pl-12 will-change-transform">
+          {PROJECTS.map((p, i) => (
             <article
-              key={p.id}
-              className="group relative aspect-[4/5] w-[85vw] shrink-0 snap-center overflow-hidden rounded-2xl bg-surface sm:w-[60vw] md:w-[45vw] lg:w-[30vw] focus:outline-none focus:ring-2 focus:ring-gold shadow-cinematic hover:shadow-hover transition-all duration-500 hover:-translate-y-2"
+              key={p.title}
+              className="group relative h-[70vh] w-[78vw] flex-shrink-0 overflow-hidden md:w-[55vw] lg:w-[42vw]"
             >
               <img
-                src={p.thumbnail}
+                src={p.img}
                 alt={p.title}
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-1000 ease-cinema group-hover:scale-105"
+                className="h-full w-full object-cover transition-transform duration-[1.6s] ease-out group-hover:scale-110"
               />
               <div
-                className="absolute inset-0 opacity-90 transition-opacity duration-500 group-hover:opacity-70"
-                style={{ background: "linear-gradient(180deg, transparent 40%, var(--background) 100%)" }}
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(180deg, transparent 30%, rgba(8,8,8,0.85) 100%)" }}
               />
               <div className="absolute left-8 bottom-10 right-8">
                 <span className="text-[10px] uppercase tracking-[0.4em] text-gold-soft">
@@ -266,17 +283,13 @@ function FeaturedProjects() {
                 </span>
                 <h3 className="mt-3 font-display text-3xl md:text-5xl">{p.title}</h3>
                 <div className="mt-5 flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-gold opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                  <Link to="/projects/$slug" params={{ slug: p.slug }} className="absolute inset-0 z-10">
-                    <span className="sr-only">View Project</span>
-                  </Link>
-                  View Case Study <ArrowRight className="h-3 w-3" />
+                  Watch film <ArrowRight className="h-3 w-3" />
                 </div>
               </div>
-              <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-gold/10 rounded-2xl" />
+              <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-gold/15" />
             </article>
           ))}
-          {/* Spacer to allow last item to scroll into center */}
-          <div className="w-[10vw] shrink-0 sm:w-[20vw] lg:w-[35vw]" />
+          <div className="w-[20vw] flex-shrink-0" />
         </div>
       </div>
     </section>
@@ -326,25 +339,14 @@ function Services() {
 
 /* ─────────────────── 5. CLIENTS marquee ─────────────────── */
 function ClientsMarquee() {
-  // Triple the items to ensure smooth infinite scroll
-  const items = [...CLIENTS, ...CLIENTS, ...CLIENTS];
+  const items = [...CLIENTS, ...CLIENTS];
   return (
-    <section className="relative overflow-hidden border-y border-border bg-background py-16">
-      {/* Add an animation style for the marquee */}
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-        }
-      `}</style>
-      <div className="flex w-max animate-marquee items-center gap-24 whitespace-nowrap px-6">
+    <section className="relative overflow-hidden border-y border-border bg-background py-10">
+      <div className="marquee-track flex w-max gap-16 whitespace-nowrap px-6">
         {items.map((c, i) => (
           <span
             key={`${c}-${i}`}
-            className="font-display text-2xl tracking-[0.4em] text-foreground/40 transition-colors hover:text-gold"
+            className="font-display text-2xl tracking-[0.4em] text-foreground/40 hover:text-gold transition"
           >
             {c}
           </span>
@@ -465,6 +467,62 @@ function Team() {
 }
 
 
+/* ─────────────────── 10. TESTIMONIALS WALL ─────────────────── */
+function TestimonialsWall() {
+  return (
+    <section className="bg-background py-32 md:py-44">
+      <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
+        <div className="mb-16 max-w-2xl">
+          <span className="text-[11px] uppercase tracking-[0.5em] text-gold">Voices</span>
+          <h2 className="mt-4 font-display text-5xl md:text-7xl">
+            <span className="gradient-gold-text">Loved</span> by people we admire.
+          </h2>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {TESTIMONIALS.map((t) => (
+            <article
+              key={t.name}
+              className="group relative overflow-hidden border border-border bg-card"
+            >
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  src={t.img}
+                  alt={t.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-background/40" />
+                <PlayCircle className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 text-gold transition-transform group-hover:scale-110" />
+                <div className="absolute bottom-3 right-3 rounded-full glass px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-gold-soft">
+                  ▶ {t.views}
+                </div>
+              </div>
+              <div className="p-7">
+                <Quote className="h-5 w-5 text-gold" />
+                <p className="font-serif mt-3 text-lg leading-relaxed italic text-foreground/85">
+                  "{t.quote}"
+                </p>
+                <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
+                  <div>
+                    <div className="text-sm text-foreground">{t.name}</div>
+                    <div className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                      {t.brand}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 text-gold">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-current" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /* ─────────────────── 11. GALLERY PREVIEW (masonry) ─────────────────── */
 function GalleryPreview() {
