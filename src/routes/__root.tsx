@@ -83,24 +83,45 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5" },
       { title: "Havilah — Cinematic Multimedia Production" },
       {
         name: "description",
         content:
           "Where Creativity Meets Cinematic Excellence. Films, commercials, music videos and brand stories crafted with award-winning craft.",
       },
-      { name: "author", content: "Havilah" },
+      { name: "author", content: "Havilah Studio" },
+      { name: "robots", content: "index, follow" },
+      { name: "theme-color", content: "#0a0a0a" },
+      
+      // Open Graph / Facebook
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Havilah" },
       { property: "og:title", content: "Havilah — Cinematic Multimedia Production" },
       { property: "og:description", content: "We don't create videos. We create experiences." },
-      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://havilah-alpha.vercel.app/" },
+      // Update this path to your actual social sharing image
+      { property: "og:image", content: "https://havilah-alpha.vercel.app/og-image.jpg" },
+      
+      // Twitter
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Havilah — Cinematic Multimedia Production" },
+      { name: "twitter:description", content: "We don't create videos. We create experiences." },
+      { name: "twitter:image", content: "https://havilah-alpha.vercel.app/og-image.jpg" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "icon",
+        href: "/favicon.ico",
+      },
+      {
+        rel: "canonical",
+        href: "https://havilah-alpha.vercel.app/",
+      }
     ],
   }),
   shellComponent: RootShell,
