@@ -178,6 +178,7 @@ export function VideoPlayer({
         poster={poster}
         autoPlay={autoPlay}
         muted={muted}
+        defaultMuted={muted}
         loop={loop}
         playsInline
         preload="metadata"
@@ -187,7 +188,7 @@ export function VideoPlayer({
           setIsPlaying(false);
           setShowControls(true);
         }}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain md:object-cover"
       />
       
       {/* Big center play/replay button when paused */}
