@@ -1,4 +1,4 @@
-//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CZSBiocr.js
+//#region node_modules/.nitro/vite/services/ssr/assets/_tanstack-start-manifest_v-CEUL_V6U.js
 var tsrStartManifest = () => ({ routes: {
 	__root__: {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/__root.tsx",
@@ -12,24 +12,24 @@ var tsrStartManifest = () => ({ routes: {
 			"/services",
 			"/testimonials"
 		],
-		preloads: ["/assets/index-FRBOSaTw.js"],
+		preloads: ["/assets/index-4SaiUqX8.js"],
 		scripts: [{ attrs: {
 			type: "module",
 			async: !0,
-			src: "/assets/index-FRBOSaTw.js"
+			src: "/assets/index-4SaiUqX8.js"
 		} }]
 	},
 	"/": {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/index.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/routes-DKyrZsjY.js",
-			"/assets/circle-play-CZLd0Ll2.js",
-			"/assets/video-BCcYGkdd.js",
-			"/assets/arrow-right-pu77CVr0.js",
-			"/assets/award-CG8ibEkl.js",
-			"/assets/map-pin-C4hfOczw.js",
-			"/assets/star-CmulVt0M.js",
+			"/assets/routes-CLSXuN9K.js",
+			"/assets/circle-play-DubhHRov.js",
+			"/assets/video-B__BECD7.js",
+			"/assets/arrow-right-B_utXxY2.js",
+			"/assets/award-jcjGg5dB.js",
+			"/assets/map-pin-o-HHZzCv.js",
+			"/assets/star-CkPrcYRi.js",
 			"/assets/proj-corporate-Bfwlgkl9.js",
 			"/assets/proj-podcast-Do_-9CeN.js"
 		]
@@ -38,10 +38,10 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/contact.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/contact-Ddk7UAVj.js",
-			"/assets/map-pin-C4hfOczw.js",
-			"/assets/plus-DSRXe_ZF.js",
-			"/assets/PageHero-B6yp50TG.js"
+			"/assets/contact-DAAqOWhq.js",
+			"/assets/map-pin-o-HHZzCv.js",
+			"/assets/plus-BVFGJoGc.js",
+			"/assets/PageHero-CfPAJ17G.js"
 		]
 	},
 	"/courses": {
@@ -53,8 +53,8 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/gallery.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/gallery-B_ikv0ZI.js",
-			"/assets/PageHero-B6yp50TG.js",
+			"/assets/gallery-CXOQGWc5.js",
+			"/assets/PageHero-CfPAJ17G.js",
 			"/assets/proj-corporate-Bfwlgkl9.js",
 			"/assets/proj-podcast-Do_-9CeN.js"
 		]
@@ -68,11 +68,11 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/projects.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/projects-CFqCeJEF.js",
-			"/assets/circle-play-CZLd0Ll2.js",
-			"/assets/arrow-right-pu77CVr0.js",
-			"/assets/award-CG8ibEkl.js",
-			"/assets/PageHero-B6yp50TG.js",
+			"/assets/projects-C5p2djRJ.js",
+			"/assets/circle-play-DubhHRov.js",
+			"/assets/arrow-right-B_utXxY2.js",
+			"/assets/award-jcjGg5dB.js",
+			"/assets/PageHero-CfPAJ17G.js",
 			"/assets/proj-corporate-Bfwlgkl9.js",
 			"/assets/proj-podcast-Do_-9CeN.js"
 		]
@@ -81,21 +81,21 @@ var tsrStartManifest = () => ({ routes: {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/services.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/services-CL6BswIL.js",
-			"/assets/video-BCcYGkdd.js",
-			"/assets/arrow-right-pu77CVr0.js",
-			"/assets/plus-DSRXe_ZF.js",
-			"/assets/PageHero-B6yp50TG.js"
+			"/assets/services-BBtWVnDS.js",
+			"/assets/video-B__BECD7.js",
+			"/assets/arrow-right-B_utXxY2.js",
+			"/assets/plus-BVFGJoGc.js",
+			"/assets/PageHero-CfPAJ17G.js"
 		]
 	},
 	"/testimonials": {
 		filePath: "D:/Robinson/PROJECTS/Lovable/src/routes/testimonials.tsx",
 		children: void 0,
 		preloads: [
-			"/assets/testimonials-CAiEBw_Y.js",
-			"/assets/award-CG8ibEkl.js",
-			"/assets/star-CmulVt0M.js",
-			"/assets/PageHero-B6yp50TG.js",
+			"/assets/testimonials-lNznzMct.js",
+			"/assets/award-jcjGg5dB.js",
+			"/assets/star-CkPrcYRi.js",
+			"/assets/PageHero-CfPAJ17G.js",
 			"/assets/proj-corporate-Bfwlgkl9.js"
 		]
 	}

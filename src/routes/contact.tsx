@@ -4,6 +4,7 @@ import {
   Mail, Phone, MapPin, Send, Instagram, Youtube, Linkedin, Clock, Calendar, Plus, Minus,
 } from "lucide-react";
 import { PageHero } from "@/components/cinematic/PageHero";
+import { sendEmail } from "@/lib/send-email";
 
 import heroImg from "@/assets/contact-aerial.jpg";
 
@@ -47,12 +48,35 @@ const FAQ = [
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    (e.target as HTMLFormElement).reset();
-    setTimeout(() => setSent(false), 6000);
+    setLoading(true);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      company: formData.get("company") as string,
+      service: formData.get("service") as string,
+      budget: formData.get("budget") as string,
+      date: formData.get("date") as string,
+      message: formData.get("message") as string,
+    };
+
+    try {
+      await sendEmail({ data });
+      setSent(true);
+      (e.target as HTMLFormElement).reset();
+      setTimeout(() => setSent(false), 6000);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -114,9 +138,10 @@ function ContactPage() {
 
             <button
               type="submit"
-              className="inline-flex items-center gap-3 bg-gold px-10 py-4 text-[11px] uppercase tracking-[0.4em] text-primary-foreground hover:bg-gold-soft shadow-gold transition-colors"
+              disabled={loading || sent}
+              className="inline-flex items-center gap-3 bg-gold px-10 py-4 text-[11px] uppercase tracking-[0.4em] text-primary-foreground hover:bg-gold-soft shadow-gold transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              {sent ? "Brief Received" : "Send Brief"} <Send className="h-4 w-4" />
+              {loading ? "Sending..." : sent ? "Brief Received" : "Send Brief"} <Send className="h-4 w-4" />
             </button>
             {sent && (
               <p className="font-serif text-sm italic text-gold">

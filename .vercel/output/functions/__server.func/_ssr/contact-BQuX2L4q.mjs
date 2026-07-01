@@ -1,11 +1,26 @@
 import { r as __toESM } from "../_runtime.mjs";
+import { t as getServerFnById } from "../__23tanstack-start-server-fn-resolver-CrVvhj_I.mjs";
+import { i as TSS_SERVER_FUNCTION, l as createServerFn } from "./esm-Dova13aH.mjs";
 import { t as contact_aerial_default } from "./contact-aerial-BbAPaEi2.mjs";
 import { n as require_react, r as require_jsx_runtime } from "../_libs/react+tanstack__react-query.mjs";
 import { t as PageHero } from "./PageHero-KO0_9A3L.mjs";
 import { C as Calendar, _ as Instagram, c as Plus, d as Minus, g as Linkedin, h as Mail, l as Phone, m as MapPin, o as Send, t as Youtube, y as Clock } from "../_libs/lucide-react.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/contact-COX_Rlss.js
+//#region node_modules/.nitro/vite/services/ssr/assets/contact-BQuX2L4q.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
+var createSsrRpc = (functionId) => {
+	const url = "/_serverFn/" + functionId;
+	const serverFnMeta = { id: functionId };
+	const fn = async (...args) => {
+		return (await getServerFnById(functionId, { origin: "server" }))(...args);
+	};
+	return Object.assign(fn, {
+		url,
+		serverFnMeta,
+		[TSS_SERVER_FUNCTION]: true
+	});
+};
+var sendEmail = createServerFn({ method: "POST" }).validator((data) => data).handler(createSsrRpc("8a81c8cf5b42026ee0eedaaec5fe44e869252b0a92af1aea2a8bf8b4f7faf35e"));
 var SERVICES = [
 	"Film Production",
 	"Commercial",
@@ -78,11 +93,32 @@ var FAQ = [
 ];
 function ContactPage() {
 	const [sent, setSent] = (0, import_react.useState)(false);
-	const onSubmit = (e) => {
+	const [loading, setLoading] = (0, import_react.useState)(false);
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		setSent(true);
-		e.target.reset();
-		setTimeout(() => setSent(false), 6e3);
+		setLoading(true);
+		const formData = new FormData(e.currentTarget);
+		const data = {
+			name: formData.get("name"),
+			email: formData.get("email"),
+			phone: formData.get("phone"),
+			company: formData.get("company"),
+			service: formData.get("service"),
+			budget: formData.get("budget"),
+			date: formData.get("date"),
+			message: formData.get("message")
+		};
+		try {
+			await sendEmail({ data });
+			setSent(true);
+			e.target.reset();
+			setTimeout(() => setSent(false), 6e3);
+		} catch (error) {
+			console.error(error);
+			alert("Failed to send message. Please try again later.");
+		} finally {
+			setLoading(false);
+		}
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("main", {
 		className: "relative",
@@ -199,9 +235,10 @@ function ContactPage() {
 							})] }),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 								type: "submit",
-								className: "inline-flex items-center gap-3 bg-gold px-10 py-4 text-[11px] uppercase tracking-[0.4em] text-primary-foreground hover:bg-gold-soft shadow-gold transition-colors",
+								disabled: loading || sent,
+								className: "inline-flex items-center gap-3 bg-gold px-10 py-4 text-[11px] uppercase tracking-[0.4em] text-primary-foreground hover:bg-gold-soft shadow-gold transition-colors disabled:opacity-70 disabled:cursor-not-allowed",
 								children: [
-									sent ? "Brief Received" : "Send Brief",
+									loading ? "Sending..." : sent ? "Brief Received" : "Send Brief",
 									" ",
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, { className: "h-4 w-4" })
 								]

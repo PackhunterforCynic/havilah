@@ -1,4 +1,5 @@
 import { r as __toESM } from "../_runtime.mjs";
+import { c as HeadContent, d as Outlet, f as lazyRouteComponent, g as useRouter, h as Link, m as createRootRouteWithContext, p as createFileRoute, s as Scripts, u as createRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { t as contact_aerial_default } from "./contact-aerial-BbAPaEi2.mjs";
 import { n as require_react, r as require_jsx_runtime, t as QueryClientProvider } from "../_libs/react+tanstack__react-query.mjs";
 import { _ as Instagram, h as Mail, l as Phone, p as MessageCircle } from "../_libs/lucide-react.mjs";
@@ -6,14 +7,13 @@ import { n as proj_event_default, t as proj_commercial_default } from "./proj-co
 import { t as about_studio_default } from "./about-studio-DyATaaLe.mjs";
 import { t as proj_drone_default } from "./proj-drone-CFamKc18.mjs";
 import { t as hero_cinema_default } from "./hero-cinema-DFMLvukT.mjs";
-import { M as useRouter, c as HeadContent, d as Outlet, f as lazyRouteComponent, h as Link, m as createRootRouteWithContext, p as createFileRoute, s as Scripts, u as createRouter } from "../_libs/@tanstack/react-router+[...].mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as Lenis } from "../_libs/lenis.mjs";
 import { n as gsapWithCSS, t as ScrollTrigger } from "../_libs/gsap.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-ADJ0ycAA.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-Cw4zkwk3.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-54WWXb1o.css";
+var styles_default = "/assets/styles-CilHkafA.css";
 function reportLovableError(error, context = {}) {
 	if (typeof window === "undefined") return;
 	window.__lovableEvents?.captureException?.(error, {
@@ -528,7 +528,7 @@ var Route$8 = createRootRouteWithContext()({
 			{ charSet: "utf-8" },
 			{
 				name: "viewport",
-				content: "width=device-width, initial-scale=1"
+				content: "width=device-width, initial-scale=1, maximum-scale=5"
 			},
 			{ title: "Havilah — Cinematic Multimedia Production" },
 			{
@@ -537,6 +537,22 @@ var Route$8 = createRootRouteWithContext()({
 			},
 			{
 				name: "author",
+				content: "Havilah Studio"
+			},
+			{
+				name: "robots",
+				content: "index, follow"
+			},
+			{
+				name: "theme-color",
+				content: "#0a0a0a"
+			},
+			{
+				property: "og:type",
+				content: "website"
+			},
+			{
+				property: "og:site_name",
 				content: "Havilah"
 			},
 			{
@@ -548,18 +564,44 @@ var Route$8 = createRootRouteWithContext()({
 				content: "We don't create videos. We create experiences."
 			},
 			{
-				property: "og:type",
-				content: "website"
+				property: "og:url",
+				content: "https://havilah-alpha.vercel.app/"
+			},
+			{
+				property: "og:image",
+				content: "https://havilah-alpha.vercel.app/og-image.jpg"
 			},
 			{
 				name: "twitter:card",
 				content: "summary_large_image"
+			},
+			{
+				name: "twitter:title",
+				content: "Havilah — Cinematic Multimedia Production"
+			},
+			{
+				name: "twitter:description",
+				content: "We don't create videos. We create experiences."
+			},
+			{
+				name: "twitter:image",
+				content: "https://havilah-alpha.vercel.app/og-image.jpg"
 			}
 		],
-		links: [{
-			rel: "stylesheet",
-			href: styles_default
-		}]
+		links: [
+			{
+				rel: "stylesheet",
+				href: styles_default
+			},
+			{
+				rel: "icon",
+				href: "/favicon.ico"
+			},
+			{
+				rel: "canonical",
+				href: "https://havilah-alpha.vercel.app/"
+			}
+		]
 	}),
 	shellComponent: RootShell,
 	component: RootComponent,
@@ -685,7 +727,7 @@ var Route$3 = createFileRoute("/gallery")({
 });
 var $$splitComponentImporter$2 = () => import("./courses-DhrXBG9T.mjs");
 var Route$2 = createFileRoute("/courses")({ component: lazyRouteComponent($$splitComponentImporter$2, "component") });
-var $$splitComponentImporter$1 = () => import("./contact-COX_Rlss.mjs");
+var $$splitComponentImporter$1 = () => import("./contact-BQuX2L4q.mjs");
 var Route$1 = createFileRoute("/contact")({
 	head: () => ({ meta: [
 		{ title: "Contact — Begin Your Film with Havilah Studio" },
