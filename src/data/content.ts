@@ -50,10 +50,50 @@ export const SERVICE_TILES = [
 ];
 
 export const TEAM = [
-  { name: "Arjun Mehta", role: "Founder · Director", img: team1 },
-  { name: "Elena Park", role: "Lead Cinematographer", img: team2 },
-  { name: "Ravi Kapoor", role: "Senior Colorist", img: team3 },
-  { name: "Marcus Hayes", role: "Head of Post", img: team4 },
+  { 
+    name: "Arjun Mehta", 
+    role: "Founder · Director", 
+    img: team1,
+    bio: "Arjun brings stories to life with a vision rooted in emotion, detail, and cinematic excellence. His work spans global brands and intimate documentaries.",
+    experience: "12+ Years Experience",
+    origin: "Mumbai, IND",
+    instagram: "@arjun.director",
+    email: "arjun@havilah.studio",
+    specialties: ["Visual Storytelling", "Brand Films"]
+  },
+  { 
+    name: "Elena Park", 
+    role: "Lead Cinematographer", 
+    img: team2,
+    bio: "Elena's mastery of light and shadow creates frames that speak volumes. She specializes in shooting on film and large format digital sensors.",
+    experience: "8+ Years Experience",
+    origin: "Seoul, KOR",
+    instagram: "@elenashoots",
+    email: "elena@havilah.studio",
+    specialties: ["Anamorphic Lenses", "Steadicam"]
+  },
+  { 
+    name: "Ravi Kapoor", 
+    role: "Senior Colorist", 
+    img: team3,
+    bio: "Ravi breathes life into raw footage, crafting palettes that enhance the emotional core of every project he touches.",
+    experience: "10+ Years Experience",
+    origin: "London, UK",
+    instagram: "@ravi.colors",
+    email: "ravi@havilah.studio",
+    specialties: ["HDR Mastering", "Film Emulation"]
+  },
+  { 
+    name: "Marcus Hayes", 
+    role: "Head of Post", 
+    img: team4,
+    bio: "Marcus oversees the entire post-production pipeline, ensuring a seamless transition from set to final delivery with meticulous precision.",
+    experience: "15+ Years Experience",
+    origin: "Los Angeles, USA",
+    instagram: "@marcus.post",
+    email: "marcus@havilah.studio",
+    specialties: ["VFX Supervision", "Workflow Design"]
+  },
 ];
 
 export const HOME_TESTIMONIALS = [

@@ -11,13 +11,13 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { CustomCursor } from "../components/cinematic/CustomCursor";
 import { SmoothScroll } from "../components/cinematic/SmoothScroll";
 import { ParticleField } from "../components/cinematic/ParticleField";
-import { Loader } from "../components/cinematic/Loader";
+import { CinematicStartup } from "../components/cinematic/CinematicStartup";
 import { Nav } from "../components/cinematic/Nav";
 import { Footer } from "../components/cinematic/Footer";
 import { FloatingSocials } from "../components/cinematic/FloatingSocials";
+import { ThemeProvider } from "../providers/ThemeProvider";
 
 function NotFoundComponent() {
   return (
@@ -57,6 +57,15 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <p className="font-serif mt-3 italic text-muted-foreground">
           Something went wrong on our end. Try again, or head back to the studio.
         </p>
+        <div className="mt-4 p-4 bg-red-950/30 border border-red-900 rounded-md text-left overflow-auto max-h-[300px]">
+          <p className="font-mono text-xs text-red-400 font-bold mb-2">Error Details (For debugging):</p>
+          <p className="font-mono text-xs text-red-200">{error.name}: {error.message}</p>
+          {error.stack && (
+            <pre className="font-mono text-[10px] text-red-300 mt-2 whitespace-pre-wrap">
+              {error.stack}
+            </pre>
+          )}
+        </div>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button
             onClick={() => {
@@ -110,6 +119,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://havilah-alpha.vercel.app/og-image.jpg" },
     ],
     links: [
+      // Resource Preloading: Preload the main stylesheet to reduce render delay
+      {
+        rel: "preload",
+        as: "style",
+        href: appCss,
+      },
       {
         rel: "stylesheet",
         href: appCss,
@@ -132,7 +147,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -146,18 +161,22 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  const location = router.state.location.pathname;
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Loader />
-      <SmoothScroll />
-      <CustomCursor />
-      <ParticleField />
-      <Nav />
-      <FloatingSocials />
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
-      <Footer />
+      <ThemeProvider defaultTheme="dark" storageKey="havilah-theme">
+        <CinematicStartup />
+        <SmoothScroll />
+        <ParticleField />
+        <Nav />
+        <FloatingSocials />
+        <div className="flex-1">
+          <Outlet />
+        </div>
+        <Footer />
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

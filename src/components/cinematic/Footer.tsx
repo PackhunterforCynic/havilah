@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 export function Footer() {
   return (
     <footer className="relative z-10 border-t border-border bg-background py-16">
@@ -16,9 +18,26 @@ export function Footer() {
           <div key={col.title}>
             <h4 className="text-[11px] uppercase tracking-[0.35em] text-gold-soft">{col.title}</h4>
             <ul className="mt-5 space-y-2 text-sm text-foreground/70">
-              {col.items.map((i) => (
-                <li key={i} className="hover:text-gold transition">{i}</li>
-              ))}
+              {col.items.map((i) => {
+                let to = "/";
+                if (i === "Projects" || i === "Gallery") to = "/gallery";
+                else if (i === "About" || i === "Team") to = "/#";
+                else if (i === "Services") to = "/services";
+                else if (i === "Contact") to = "/contact";
+                
+                // Keep text for non-links
+                if (col.title === "Contact") {
+                  return <li key={i} className="text-foreground/60">{i}</li>;
+                }
+
+                return (
+                  <li key={i}>
+                    <Link to={to} className="hover:text-gold transition">
+                      {i}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}

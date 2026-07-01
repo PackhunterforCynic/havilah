@@ -15,6 +15,8 @@ import {
   HOME_TESTIMONIALS as TESTIMONIALS,
   CLIENTS,
 } from "@/data/content";
+import { TeamModal } from "@/components/cinematic/TeamModal";
+import { ServiceModal } from "@/components/cinematic/ServiceModal";
 
 import contactAerial from "@/assets/contact-aerial.jpg";
 const aboutImg = IMAGES.about;
@@ -90,17 +92,17 @@ function Hero() {
       <div className="absolute inset-0" style={{ background: "var(--gradient-spot)" }} />
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <span className="mb-6 text-[10px] uppercase tracking-[0.6em] text-gold-soft/80">
+        <span className="mb-4 text-[9px] md:text-[10px] uppercase tracking-[0.4em] text-gold-soft/80">
           Est. Mumbai · Los Angeles · London
         </span>
-        <h1 className="font-display text-[14vw] leading-none gold-sweep md:text-[10rem]">
+        <h1 className="font-display text-[18vw] leading-none gold-sweep md:text-[10rem]">
           HAVILAH
         </h1>
         <p className="font-serif mt-8 max-w-2xl text-lg italic text-foreground/85 md:text-2xl">
           <span ref={taglineRef} />
           <span className="ml-1 inline-block h-5 w-px animate-pulse bg-gold align-middle" />
         </p>
-        <div className="mt-12 flex flex-col items-center gap-4 sm:flex-row">
+        <div className="mt-12 flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row">
           <MagneticButton variant="primary">
             <PlayCircle className="h-4 w-4" />
             View Projects
@@ -182,7 +184,7 @@ function About() {
   }, []);
 
   return (
-    <section ref={ref} className="relative overflow-hidden bg-background py-32 md:py-44">
+    <section ref={ref} className="relative overflow-hidden bg-background py-24 md:py-44">
       <div className="mx-auto grid max-w-[1500px] gap-16 px-6 lg:px-12 md:grid-cols-2 md:gap-24">
         <div className="relative aspect-[4/5] overflow-hidden">
           <img
@@ -296,8 +298,10 @@ function FeaturedProjects() {
 
 /* ───────────────────────── 4. SERVICES (radial) ───────────────────────── */
 function Services() {
+  const [selectedService, setSelectedService] = useState<typeof SERVICES[0] | null>(null);
+
   return (
-    <section className="relative overflow-hidden bg-background py-32 md:py-44">
+    <section className="relative overflow-hidden bg-background py-24 md:py-44">
       <div
         className="absolute inset-0 opacity-60"
         style={{ background: "var(--gradient-spot)" }}
@@ -313,19 +317,22 @@ function Services() {
 
         <div className="relative mx-auto mt-24 grid max-w-5xl grid-cols-2 gap-px overflow-hidden border border-border md:grid-cols-4">
           {SERVICES.map((s) => (
-            <div
+            <button
               key={s.label}
-              className="group relative bg-background p-8 md:p-12 transition-colors hover:bg-secondary"
+              onClick={() => setSelectedService(s)}
+              className="group relative bg-background p-8 md:p-12 transition-colors hover:bg-surface/50 text-center flex flex-col items-center justify-center focus:outline-none focus:ring-2 focus:ring-gold"
             >
               <s.icon className="mx-auto h-8 w-8 text-gold transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110" />
-              <p className="mt-5 text-[12px] uppercase tracking-[0.25em] text-foreground/80">
+              <p className="mt-5 text-[12px] uppercase tracking-[0.25em] text-foreground/80 group-hover:text-gold transition-colors">
                 {s.label}
               </p>
               <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px scale-x-0 origin-left bg-gold transition-transform duration-500 group-hover:scale-x-100" />
-            </div>
+            </button>
           ))}
         </div>
       </div>
+      
+      <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
     </section>
   );
 }
@@ -387,7 +394,7 @@ function Stats() {
     { v: 12, s: "M", l: "Audience Reach" },
   ];
   return (
-    <section className="bg-background py-28">
+    <section className="bg-background py-24 md:py-32">
       <div className="mx-auto grid max-w-[1500px] gap-12 px-6 lg:px-12 md:grid-cols-4">
         {items.map((it) => (
           <div key={it.l} className="text-center md:text-left">
@@ -406,8 +413,10 @@ function Stats() {
 
 /* ─────────────────── 7. TEAM ─────────────────── */
 function Team() {
+  const [selectedMember, setSelectedMember] = useState<typeof TEAM[0] | null>(null);
+
   return (
-    <section className="relative bg-background py-32 md:py-44">
+    <section className="relative bg-background py-24 md:py-44">
       <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
         <div className="flex items-end justify-between gap-8">
           <div>
@@ -416,14 +425,18 @@ function Team() {
               Meet the <span className="gradient-gold-text">Makers.</span>
             </h2>
           </div>
-          <a href="#" className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-gold-soft hover:text-gold">
+          <a href="#" className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-gold-soft hover:text-gold transition-colors">
             Full team <ArrowRight className="h-3 w-3" />
           </a>
         </div>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {TEAM.map((m) => (
-            <article key={m.name} className="group relative overflow-hidden">
+            <button 
+              key={m.name} 
+              onClick={() => setSelectedMember(m)}
+              className="team-card group relative overflow-hidden rounded-xl border border-border/50 text-left focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-500 hover:-translate-y-2 hover:shadow-hover"
+            >
               <div className="relative aspect-[3/4] overflow-hidden">
                 <img
                   src={m.img}
@@ -436,17 +449,19 @@ function Team() {
                   className="absolute inset-0 opacity-80"
                   style={{ background: "linear-gradient(180deg, transparent 50%, rgba(8,8,8,0.9) 100%)" }}
                 />
-                <div className="absolute inset-x-0 bottom-0 p-6">
-                  <h3 className="font-display text-xl">{m.name}</h3>
+                <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end">
+                  <h3 className="font-display text-xl text-foreground">{m.name}</h3>
                   <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-gold-soft">
                     {m.role}
                   </p>
                 </div>
               </div>
-            </article>
+            </button>
           ))}
         </div>
       </div>
+      
+      <TeamModal member={selectedMember} onClose={() => setSelectedMember(null)} />
     </section>
   );
 }

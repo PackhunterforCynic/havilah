@@ -1,31 +1,37 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
-import { GALLERY_IMAGES } from "@/data/gallery";
+import { PROJECTS } from "@/data/projects";
 import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
-import bgVideo from "@/assets/project1/video.mp4";
-export const Route = createFileRoute("/gallery")({
-  head: () => ({
+
+export const Route = createFileRoute("/projects/$slug")({
+  loader: ({ params }) => {
+    const project = PROJECTS.find((p) => p.slug === params.slug);
+    if (!project) throw notFound();
+    return { project };
+  },
+  head: ({ loaderData }) => ({
     meta: [
-      { title: "Project Gallery — Havilah" },
-      { name: "description", content: "Cinematic gallery" },
+      { title: `${loaderData?.project.title} — Havilah Case Study` },
+      { name: "description", content: loaderData?.project.description },
     ],
   }),
-  component: ProjectGallery,
+  component: ProjectDetail,
 });
 
-function ProjectGallery() {
+function ProjectDetail() {
+  const { project } = Route.useLoaderData();
   const [openLightbox, setOpenLightbox] = useState<number | null>(null);
 
   const nextImage = () => {
     if (openLightbox !== null) {
-      setOpenLightbox((openLightbox + 1) % GALLERY_IMAGES.length);
+      setOpenLightbox((openLightbox + 1) % project.galleryImages.length);
     }
   };
 
   const prevImage = () => {
     if (openLightbox !== null) {
-      setOpenLightbox((openLightbox - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+      setOpenLightbox((openLightbox - 1 + project.galleryImages.length) % project.galleryImages.length);
     }
   };
 
@@ -34,47 +40,96 @@ function ProjectGallery() {
       {/* Navigation Back */}
       <div className="absolute top-8 left-6 lg:left-12 z-50">
         <Link
-          to="/"
+          to="/projects"
           className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-background/50 backdrop-blur-md border border-border/50 text-foreground transition-all hover:bg-gold hover:text-primary-foreground hover:border-gold hover:scale-110"
         >
           <ArrowLeft className="h-5 w-5" />
         </Link>
       </div>
 
-      {/* Trailer Video */}
+      {/* Hero Video */}
       <section className="relative h-[100svh] w-full bg-black">
-        <VideoPlayer
-          src={bgVideo}
-          autoPlay
-          muted
-          loop
-          className="h-full w-full"
-        />
+        {project.heroVideo ? (
+          <VideoPlayer
+            src={project.heroVideo}
+            poster={project.poster}
+            autoPlay
+            muted
+            loop
+            className="h-full w-full"
+          />
+        ) : (
+          <img 
+            src={project.poster} 
+            alt={project.title} 
+            className="h-full w-full object-cover opacity-80"
+          />
+        )}
       </section>
 
-      {/* Overview & Metadata */}
-      <section className="mx-auto max-w-[1500px] px-4 py-16 md:px-6 md:py-24 lg:px-12">
-        <div className="grid gap-8 md:gap-16 md:grid-cols-12">
+      {/* Overview & Credits */}
+      <section className="mx-auto max-w-[1500px] px-6 py-24 lg:px-12">
+        <div className="grid gap-16 md:grid-cols-12">
+          
+          {/* Main Overview */}
           <div className="md:col-span-8 lg:col-span-9">
-            <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] text-gold shadow-sm">
-              Featured Gallery
+            <span className="text-[10px] uppercase tracking-[0.5em] text-gold shadow-sm">
+              {project.category} · {project.year}
             </span>
-            <h1 className="mt-4 font-display text-4xl md:text-5xl lg:text-8xl">
-              Project Showcase
+            <h1 className="mt-4 font-display text-5xl md:text-7xl lg:text-8xl">
+              {project.title}
             </h1>
-            <p className="mt-6 font-serif text-lg leading-relaxed text-foreground/80 md:mt-8 md:text-2xl lg:max-w-4xl">
-              A curated collection of frames and motion from our latest project, 
-              capturing the atmosphere, detail, and emotion of the production.
+            <p className="mt-8 font-serif text-xl leading-relaxed text-foreground/80 md:text-2xl lg:max-w-4xl">
+              {project.description}
             </p>
           </div>
+
+          {/* Sidebar Metadata */}
+          <div className="md:col-span-4 lg:col-span-3 space-y-10 border-t border-border/50 pt-10 md:border-t-0 md:pt-0">
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/50">Client</h3>
+              <p className="mt-2 text-sm text-foreground">{project.client}</p>
+            </div>
+            
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/50">Credits</h3>
+              <ul className="mt-2 space-y-3">
+                {project.credits.map(c => (
+                  <li key={c.role}>
+                    <span className="block text-[10px] uppercase tracking-[0.2em] text-gold-soft">{c.role}</span>
+                    <span className="text-sm text-foreground">{c.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-[10px] font-bold uppercase tracking-[0.3em] text-foreground/50">Tech Specs</h3>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {project.technologies.map(t => (
+                  <li key={t} className="rounded-sm border border-border bg-surface px-2 py-1 text-[10px] uppercase tracking-[0.1em] text-foreground/70">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
         </div>
       </section>
 
       {/* Image Gallery */}
-      {GALLERY_IMAGES.length > 0 && (
-        <section className="mx-auto max-w-[1500px] px-4 py-8 md:px-6 md:py-12 lg:px-12">
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-4 lg:gap-6">
-            {GALLERY_IMAGES.map((img, idx) => (
+      {project.galleryImages.length > 0 && (
+        <section className="mx-auto max-w-[1500px] px-6 py-12 lg:px-12">
+          <div className="mb-12">
+            <h2 className="font-display text-3xl md:text-4xl text-foreground/90">
+              Selected Frames
+            </h2>
+          </div>
+          
+          {/* Netflix-style responsive gallery grid with equal sizes */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+            {project.galleryImages.map((img, idx) => (
               <button
                 key={idx}
                 onClick={() => setOpenLightbox(idx)}
@@ -83,7 +138,7 @@ function ProjectGallery() {
               >
                 <img
                   src={img}
-                  alt={`Frame ${idx + 1}`}
+                  alt={`Frame ${idx + 1} from ${project.title}`}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-110"
                 />
@@ -128,7 +183,7 @@ function ProjectGallery() {
             onClick={(e) => e.stopPropagation()} 
           >
             <img
-              src={GALLERY_IMAGES[openLightbox]}
+              src={project.galleryImages[openLightbox]}
               alt={`Frame ${openLightbox + 1}`}
               className="max-h-[85vh] w-auto max-w-full rounded-md shadow-2xl object-contain"
             />
