@@ -2,9 +2,8 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { GALLERY_IMAGES } from "@/data/gallery";
-import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
-// Temporarily use an external placeholder URL to fix Vercel build
-const bgVideo = "https://cdn.coverr.co/videos/coverr-dark-abstract-background-2741/1080p.mp4";
+// import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
+const bgVideoUrl = "https://www.youtube.com/embed/cEWwJxEq9Lg?autoplay=1&mute=1&loop=1&playlist=cEWwJxEq9Lg&controls=0&modestbranding=1&rel=0";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -44,13 +43,13 @@ function ProjectGallery() {
       </div>
 
       {/* Trailer Video */}
-      <section className="relative h-[100svh] w-full bg-black">
-        <VideoPlayer
-          src={bgVideo}
-          autoPlay
-          muted
-          loop
-          className="h-full w-full"
+      <section className="relative h-[50svh] md:h-[80svh] lg:h-[100svh] w-full bg-black">
+        <iframe
+          src={bgVideoUrl}
+          title="Havilah Showreel"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="h-full w-full object-cover border-0 pointer-events-none"
         />
       </section>
 
