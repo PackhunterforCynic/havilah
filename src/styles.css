@@ -42,35 +42,35 @@
 }
 
 :root {
-  /* LIGHT THEME - Luxury Alabaster */
-  --background: #FAF9F6;
+  /* LIGHT THEME - Golden White */
+  --background: #F8F6F1;
   --surface: #FFFFFF;
-  --foreground: #1A1A1A;
-  --muted-foreground: #6B6B6B;
-  --gold: #C19B6C;
-  --gold-secondary: #A68050;
-  --border: #E8E4DB;
+  --foreground: #111111;
+  --muted-foreground: #555555;
+  --gold: #B88A2C;
+  --gold-secondary: #8C6A21;
+  --border: #E5DCC7;
   
-  --shadow-cinematic: 0 40px 80px -20px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 40px 80px -20px rgba(193, 155, 108, 0.15);
-  --shadow-gold: 0 20px 60px -20px rgba(193, 155, 108, 0.25);
+  --shadow-cinematic: 0 40px 80px -20px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 50px 100px -20px rgba(184, 138, 44, 0.2);
+  --shadow-gold: 0 20px 60px -20px rgba(184, 138, 44, 0.3);
   
   --radius: 0.25rem;
 }
 
 .dark {
-  /* DARK THEME - Deep Obsidian */
-  --background: #0A0A0A;
-  --surface: #141414;
-  --foreground: #EBEBEB;
-  --muted-foreground: #8B8B8B;
-  --gold: #D4AF7A;
-  --gold-secondary: #B3925F; 
-  --border: rgba(255, 255, 255, 0.06);
+  /* DARK THEME - Deep Black */
+  --background: #080808;
+  --surface: #111111;
+  --foreground: #FFFFFF;
+  --muted-foreground: #B7B7B7;
+  --gold: #C9A84C;
+  --gold-secondary: #F4D58D; 
+  --border: rgba(255, 255, 255, 0.08);
   
   --shadow-cinematic: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
-  --shadow-hover: 0 50px 100px -20px rgba(212, 175, 122, 0.2);
-  --shadow-gold: 0 20px 60px -20px rgba(212, 175, 122, 0.35);
+  --shadow-hover: 0 50px 100px -20px rgba(201, 168, 76, 0.3);
+  --shadow-gold: 0 20px 60px -20px rgba(201, 168, 76, 0.45);
 }
 
 @layer base {
@@ -95,9 +95,9 @@
   }
 
   h1, h2, h3, .font-display {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: 0.03em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
 
   .font-serif {
@@ -169,7 +169,7 @@
   background: linear-gradient(
     90deg,
     oklch(0.78 0.13 85) 0%,
-    oklch(0.95 0.05 90) 45%,
+    oklch(0.99 0.05 90) 45%,
     oklch(0.78 0.13 85) 100%
   );
   background-size: 200% 100%;
