@@ -269,7 +269,7 @@ export function VideoPlayer({
               {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
             </button>
             
-            <div className="hidden md:flex items-center gap-3 group/volume">
+            <div className="flex items-center gap-3 group/volume">
               <button onClick={toggleMute} className="text-white hover:text-gold transition-colors">
                 {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
               </button>

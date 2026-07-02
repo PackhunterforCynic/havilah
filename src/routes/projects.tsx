@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PlayCircle, ArrowRight } from "lucide-react";
 import { PROJECTS } from "@/data/projects";
+import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
 
 export const Route = createFileRoute("/projects")({
   head: () => ({
@@ -83,44 +84,93 @@ function ProjectsBrowser() {
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:gap-8">
-            {filteredProjects.map((project, idx) => (
-              <Link 
-                key={project.id} 
-                to="/gallery" 
-                className="group relative flex aspect-[16/10] flex-col overflow-hidden rounded-md bg-surface shadow-cinematic transition-all duration-500 hover:scale-[1.02] hover:shadow-hover hover:z-10 focus:outline-none focus:ring-2 focus:ring-gold"
+          <div className="flex flex-col gap-16 md:gap-24 lg:gap-32">
+            {filteredProjects.map((p, i) => (
+              <div 
+                key={p.id} 
+                className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 transition-all duration-700 hover:shadow-2xl hover:shadow-gold/10 md:hover:-translate-y-2 flex flex-col md:grid md:grid-cols-12 gap-0"
               >
-                <img
-                  src={project.thumbnail}
-                  alt={project.title}
-                  loading={idx < 4 ? "eager" : "lazy"}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
-                />
+                {/* Entire Card Click Overlay */}
+                <Link 
+                  to="/projects/$slug"
+                  params={{ slug: p.slug }}
+                  className="absolute inset-0 z-0"
+                  aria-label={`Explore ${p.title}`}
+                >
+                  <span className="sr-only">Explore Project {p.title}</span>
+                </Link>
                 
-                {/* Netflix-style gradient overlay that rises on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-100" />
-                
-                {/* Metadata */}
-                <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-6 translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
-                  <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.3em] text-gold-soft opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <span>{project.category}</span>
-                    <span className="h-1 w-1 rounded-full bg-gold/50" />
-                    <span>{project.year}</span>
-                  </div>
-                  
-                  <h3 className="mt-1 font-display text-2xl md:text-3xl text-foreground">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="mt-2 text-sm font-serif text-foreground/70 line-clamp-2 opacity-0 transition-opacity duration-700 delay-100 group-hover:opacity-100">
-                    {project.description}
-                  </p>
-                  
-                  <div className="mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-gold opacity-0 transition-opacity duration-500 delay-200 group-hover:opacity-100">
-                    Explore Case Study <ArrowRight className="h-3 w-3" />
-                  </div>
+                {/* Left Column: Hero Video (Span 9) */}
+                <div className="relative w-full aspect-video md:h-[600px] md:aspect-auto md:col-span-9 overflow-hidden z-10 bg-black">
+                  {p.heroVideo ? (
+                    <VideoPlayer 
+                      src={p.heroVideo} 
+                      poster={p.poster} 
+                      className="h-full w-full object-cover" 
+                      muted 
+                    />
+                  ) : (
+                    <img src={p.poster} alt={p.title} className="h-full w-full object-cover" />
+                  )}
                 </div>
-              </Link>
+                
+                {/* Right Column: Preview Images & Info (Span 3) */}
+                <div className="flex flex-col md:col-span-3 bg-surface z-10 pointer-events-none">
+                  
+                  {/* Preview Images (Top Stack) */}
+                  <div className="flex h-48 md:h-[200px] border-b border-border/50">
+                    <div className="w-1/2 h-full overflow-hidden border-r border-border/50">
+                      <img 
+                        src={p.galleryImages?.[0] || p.thumbnail} 
+                        alt={`${p.title} Preview 1`} 
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                      />
+                    </div>
+                    <div className="w-1/2 h-full overflow-hidden">
+                      <img 
+                        src={p.galleryImages?.[1] || p.thumbnail} 
+                        alt={`${p.title} Preview 2`} 
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 delay-75" 
+                      />
+                    </div>
+                  </div>
+
+                  {/* Project Info Panel */}
+                  <div className="p-6 lg:p-8 flex-1 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-gold">{p.category}</span>
+                      <span className="h-[1px] w-4 bg-border"></span>
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">{p.year}</span>
+                    </div>
+                    <h3 className="font-display text-xl lg:text-2xl text-foreground mb-3 group-hover:text-gold transition-colors duration-500 line-clamp-2">
+                      {p.title}
+                    </h3>
+                    <p className="text-xs text-foreground/70 mb-4 line-clamp-3">
+                      {p.description}
+                    </p>
+                    {p.servicesProvided && p.servicesProvided.length > 0 && (
+                       <div className="flex flex-wrap gap-2 mb-6">
+                         {p.servicesProvided.slice(0, 3).map((service, idx) => (
+                           <span key={idx} className="px-2 py-1 bg-background/50 border border-border/50 rounded-sm text-[9px] text-muted-foreground uppercase tracking-wider">
+                             {service}
+                           </span>
+                         ))}
+                       </div>
+                    )}
+                    
+                    <div className="mt-auto pointer-events-auto">
+                      <Link 
+                        to="/projects/$slug"
+                        params={{ slug: p.slug }}
+                        className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-foreground hover:text-gold transition-all duration-300 group-hover:translate-x-2"
+                      >
+                        Explore Project <ArrowRight className="h-3 w-3 text-gold" />
+                      </Link>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
             ))}
           </div>
 
