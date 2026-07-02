@@ -560,8 +560,8 @@ function VideoPortfolio() {
                 <span className="sr-only">Explore Project {p.title}</span>
               </Link>
               
-              {/* Left Column: Hero Video (Span 8) */}
-              <div className="relative w-full aspect-video md:h-[600px] md:aspect-auto md:col-span-8 overflow-hidden z-10 bg-black">
+              {/* Left Column: Hero Video (Span 9) */}
+              <div className="relative w-full aspect-video md:h-[600px] md:aspect-auto md:col-span-9 overflow-hidden z-10 bg-black">
                 {p.heroVideo ? (
                   <VideoPlayer 
                     src={p.heroVideo} 
@@ -574,45 +574,11 @@ function VideoPortfolio() {
                 )}
               </div>
               
-              {/* Right Column: Info & Preview Images (Span 4) */}
-              <div className="flex flex-col md:col-span-4 bg-surface z-10 pointer-events-none">
+              {/* Right Column: Preview Images & Info (Span 3) */}
+              <div className="flex flex-col md:col-span-3 bg-surface z-10 pointer-events-none">
                 
-                {/* Project Info Panel */}
-                <div className="p-8 lg:p-12 flex-1 flex flex-col justify-center border-b border-border/50">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-[9px] uppercase tracking-[0.3em] text-gold">{p.category}</span>
-                    <span className="h-[1px] w-4 bg-border"></span>
-                    <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">{p.year}</span>
-                  </div>
-                  <h3 className="font-display text-2xl lg:text-3xl xl:text-4xl text-foreground mb-4 group-hover:text-gold transition-colors duration-500">
-                    {p.title}
-                  </h3>
-                  <p className="text-sm text-foreground/70 mb-6 line-clamp-3">
-                    {p.description}
-                  </p>
-                  {p.servicesProvided && p.servicesProvided.length > 0 && (
-                     <div className="flex flex-wrap gap-2 mb-8">
-                       {p.servicesProvided.slice(0, 3).map((service, idx) => (
-                         <span key={idx} className="px-2 py-1 bg-background/50 border border-border/50 rounded-sm text-[10px] text-muted-foreground uppercase tracking-wider">
-                           {service}
-                         </span>
-                       ))}
-                     </div>
-                  )}
-                  
-                  <div className="mt-auto pointer-events-auto">
-                    <Link 
-                      to="/projects/$slug"
-                      params={{ slug: p.slug }}
-                      className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-foreground hover:text-gold transition-all duration-300 group-hover:translate-x-2"
-                    >
-                      Explore Project <ArrowRight className="h-4 w-4 text-gold" />
-                    </Link>
-                  </div>
-                </div>
-                
-                {/* Preview Images (Bottom Stack) */}
-                <div className="flex h-48 md:h-[250px] border-t border-border/50">
+                {/* Preview Images (Top Stack) */}
+                <div className="flex h-48 md:h-[200px] border-b border-border/50">
                   <div className="w-1/2 h-full overflow-hidden border-r border-border/50">
                     <img 
                       src={p.galleryImages?.[0] || p.thumbnail} 
@@ -626,6 +592,40 @@ function VideoPortfolio() {
                       alt={`${p.title} Preview 2`} 
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 delay-75" 
                     />
+                  </div>
+                </div>
+
+                {/* Project Info Panel */}
+                <div className="p-6 lg:p-8 flex-1 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-[9px] uppercase tracking-[0.3em] text-gold">{p.category}</span>
+                    <span className="h-[1px] w-4 bg-border"></span>
+                    <span className="text-[9px] uppercase tracking-[0.3em] text-muted-foreground">{p.year}</span>
+                  </div>
+                  <h3 className="font-display text-xl lg:text-2xl text-foreground mb-3 group-hover:text-gold transition-colors duration-500 line-clamp-2">
+                    {p.title}
+                  </h3>
+                  <p className="text-xs text-foreground/70 mb-4 line-clamp-3">
+                    {p.description}
+                  </p>
+                  {p.servicesProvided && p.servicesProvided.length > 0 && (
+                     <div className="flex flex-wrap gap-2 mb-6">
+                       {p.servicesProvided.slice(0, 3).map((service, idx) => (
+                         <span key={idx} className="px-2 py-1 bg-background/50 border border-border/50 rounded-sm text-[9px] text-muted-foreground uppercase tracking-wider">
+                           {service}
+                         </span>
+                       ))}
+                     </div>
+                  )}
+                  
+                  <div className="mt-auto pointer-events-auto">
+                    <Link 
+                      to="/projects/$slug"
+                      params={{ slug: p.slug }}
+                      className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-foreground hover:text-gold transition-all duration-300 group-hover:translate-x-2"
+                    >
+                      Explore Project <ArrowRight className="h-3 w-3 text-gold" />
+                    </Link>
                   </div>
                 </div>
                 
