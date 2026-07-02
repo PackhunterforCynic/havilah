@@ -40,7 +40,8 @@ export function VideoPlayer({
   // Global play manager (ensure only one plays at a time)
   useEffect(() => {
     const handleGlobalPlay = (e: Event) => {
-      if (e.target !== videoRef.current && isPlaying) {
+      const customEvent = e as CustomEvent<{ node: HTMLVideoElement | null }>;
+      if (customEvent.detail?.node !== videoRef.current && isPlaying) {
         if (videoRef.current) {
           videoRef.current.pause();
           setIsPlaying(false);
@@ -48,8 +49,8 @@ export function VideoPlayer({
         }
       }
     };
-    window.addEventListener("video-play", handleGlobalPlay);
-    return () => window.removeEventListener("video-play", handleGlobalPlay);
+    window.addEventListener("global-video-play", handleGlobalPlay);
+    return () => window.removeEventListener("global-video-play", handleGlobalPlay);
   }, [isPlaying]);
 
   // Viewport observer to pause when out of view
@@ -130,10 +131,10 @@ export function VideoPlayer({
   const togglePlay = () => {
     if (videoRef.current) {
       if (videoRef.current.paused) {
-        videoRef.current.play();
+        videoRef.current.play().catch(console.error);
         setIsPlaying(true);
         // Dispatch global event
-        window.dispatchEvent(new CustomEvent("video-play"));
+        window.dispatchEvent(new CustomEvent("global-video-play", { detail: { node: videoRef.current } }));
       } else {
         videoRef.current.pause();
         setIsPlaying(false);
@@ -223,7 +224,7 @@ export function VideoPlayer({
         preload="metadata"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleTimeUpdate}
-        onPlay={() => window.dispatchEvent(new CustomEvent("video-play"))}
+        onPlay={() => window.dispatchEvent(new CustomEvent("global-video-play", { detail: { node: videoRef.current } }))}
         onEnded={() => {
           setIsPlaying(false);
           setShowControls(true);
