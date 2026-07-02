@@ -4,6 +4,7 @@ import {
   Film, Camera, Video, Mic, Aperture, Tv, Music, Sparkles, ArrowRight, Plus, Minus,
 } from "lucide-react";
 import { PageHero } from "@/components/cinematic/PageHero";
+import { ServiceModal } from "@/components/cinematic/ServiceModal";
 
 import heroImg from "@/assets/about-studio.jpg";
 
@@ -48,6 +49,8 @@ const FAQ = [
 ];
 
 function ServicesPage() {
+  const [selectedService, setSelectedService] = useState<{ label: string; icon: any } | null>(null);
+
   return (
     <main className="relative">
       <PageHero
@@ -62,7 +65,11 @@ function ServicesPage() {
         <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
           <div className="grid gap-px overflow-hidden border border-border md:grid-cols-2 lg:grid-cols-4 bg-border">
             {SERVICES.map((s) => (
-              <div key={s.title} className="group relative bg-background p-10 transition-colors hover:bg-secondary">
+              <button 
+                key={s.title} 
+                onClick={() => setSelectedService({ label: s.title, icon: s.icon })}
+                className="group relative bg-background p-10 transition-colors hover:bg-secondary text-left w-full focus:outline-none focus:ring-2 focus:ring-gold"
+              >
                 <s.icon className="h-8 w-8 text-gold transition-transform duration-500 group-hover:-translate-y-1" />
                 <h3 className="mt-8 font-display text-2xl">{s.title}</h3>
                 <p className="font-serif mt-4 text-sm leading-relaxed text-foreground/70">{s.body}</p>
@@ -71,7 +78,7 @@ function ServicesPage() {
                   <span className="text-muted-foreground">{s.deliv}</span>
                 </div>
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px scale-x-0 origin-left bg-gold transition-transform duration-500 group-hover:scale-x-100" />
-              </div>
+              </button>
             ))}
           </div>
         </div>
@@ -132,6 +139,8 @@ function ServicesPage() {
           </a>
         </div>
       </section>
+
+      <ServiceModal service={selectedService} onClose={() => setSelectedService(null)} />
     </main>
   );
 }

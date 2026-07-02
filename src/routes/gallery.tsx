@@ -2,8 +2,8 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { GALLERY_IMAGES } from "@/data/gallery";
-// import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
-const bgVideoUrl = "https://www.youtube.com/embed/cEWwJxEq9Lg?autoplay=1&mute=1&loop=1&playlist=cEWwJxEq9Lg&controls=0&modestbranding=1&rel=0";
+import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
+import demoVideo from "@/assets/video.mp4";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -33,7 +33,7 @@ function ProjectGallery() {
   return (
     <main className="relative min-h-screen bg-background pb-32">
       {/* Navigation Back */}
-      <div className="absolute top-8 left-6 lg:left-12 z-50">
+      <div className="absolute top-28 left-6 lg:left-12 z-50">
         <Link
           to="/"
           className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-background/50 backdrop-blur-md border border-border/50 text-foreground transition-all hover:bg-gold hover:text-primary-foreground hover:border-gold hover:scale-110"
@@ -44,12 +44,12 @@ function ProjectGallery() {
 
       {/* Trailer Video */}
       <section className="relative h-[50svh] md:h-[80svh] lg:h-[100svh] w-full bg-black">
-        <iframe
-          src={bgVideoUrl}
-          title="Havilah Showreel"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="h-full w-full object-cover border-0 pointer-events-none"
+        <VideoPlayer
+          src={demoVideo}
+          autoPlay
+          muted
+          loop
+          className="h-full w-full"
         />
       </section>
 

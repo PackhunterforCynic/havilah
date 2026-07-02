@@ -33,7 +33,7 @@ export function TeamModal({ member, onClose }: TeamModalProps) {
       >
         <button
           onClick={onClose}
-          className="absolute right-6 top-6 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 text-gold transition-all hover:bg-gold hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-gold"
+          className="absolute right-6 top-6 z-50 inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 text-gold transition-all hover:bg-gold hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-gold"
           aria-label="Close modal"
         >
           <X className="h-5 w-5" />

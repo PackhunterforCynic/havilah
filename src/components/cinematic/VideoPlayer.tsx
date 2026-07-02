@@ -37,6 +37,44 @@ export function VideoPlayer({
     }
   }, [autoPlay]);
 
+  // Global play manager (ensure only one plays at a time)
+  useEffect(() => {
+    const handleGlobalPlay = (e: Event) => {
+      if (e.target !== videoRef.current && isPlaying) {
+        if (videoRef.current) {
+          videoRef.current.pause();
+          setIsPlaying(false);
+          setShowControls(true);
+        }
+      }
+    };
+    window.addEventListener("video-play", handleGlobalPlay);
+    return () => window.removeEventListener("video-play", handleGlobalPlay);
+  }, [isPlaying]);
+
+  // Viewport observer to pause when out of view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            if (videoRef.current && !videoRef.current.paused) {
+              videoRef.current.pause();
+              setIsPlaying(false);
+              setShowControls(true);
+            }
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const handleInteraction = () => {
       setShowControls(true);
@@ -94,6 +132,8 @@ export function VideoPlayer({
       if (videoRef.current.paused) {
         videoRef.current.play();
         setIsPlaying(true);
+        // Dispatch global event
+        window.dispatchEvent(new CustomEvent("video-play"));
       } else {
         videoRef.current.pause();
         setIsPlaying(false);
@@ -178,12 +218,12 @@ export function VideoPlayer({
         poster={poster}
         autoPlay={autoPlay}
         muted={muted}
-        defaultMuted={muted}
         loop={loop}
         playsInline
         preload="metadata"
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleTimeUpdate}
+        onPlay={() => window.dispatchEvent(new CustomEvent("video-play"))}
         onEnded={() => {
           setIsPlaying(false);
           setShowControls(true);

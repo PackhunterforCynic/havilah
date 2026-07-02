@@ -38,7 +38,7 @@ function ProjectDetail() {
   return (
     <main className="relative min-h-screen bg-background pb-32">
       {/* Navigation Back */}
-      <div className="absolute top-8 left-6 lg:left-12 z-50">
+      <div className="absolute top-28 left-6 lg:left-12 z-50">
         <Link
           to="/projects"
           className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-background/50 backdrop-blur-md border border-border/50 text-foreground transition-all hover:bg-gold hover:text-primary-foreground hover:border-gold hover:scale-110"
