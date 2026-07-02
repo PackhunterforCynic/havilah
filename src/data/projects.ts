@@ -2,7 +2,7 @@ import proj1 from "@/assets/project1.avif";
 import proj2 from "@/assets/project2.avif";
 import proj3 from "@/assets/project3.avif";
 import heroImg from "@/assets/hero-cinema.jpg";
-const demoVideo = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+import demoVideo from "@/assets/video.mp4";
 
 export type Project = {
   id: string;

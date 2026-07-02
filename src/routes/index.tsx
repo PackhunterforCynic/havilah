@@ -21,7 +21,7 @@ import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
 import { PROJECTS as PORTFOLIO_PROJECTS } from "@/data/projects";
 
 import contactAerial from "@/assets/contact-aerial.jpg";
-const demoVideo = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+import demoVideo from "@/assets/video.mp4";
 const aboutImg = IMAGES.about;
 
 
