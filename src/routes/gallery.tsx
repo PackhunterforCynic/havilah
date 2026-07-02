@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { GALLERY_IMAGES } from "@/data/gallery";
 import { VideoPlayer } from "@/components/cinematic/VideoPlayer";
-import demoVideo from "@/assets/video.mp4";
+const demoVideo = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
