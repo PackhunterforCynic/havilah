@@ -13,7 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SmoothScroll } from "../components/cinematic/SmoothScroll";
 import { ParticleField } from "../components/cinematic/ParticleField";
-import { CinematicStartup } from "../components/cinematic/CinematicStartup";
+
 import { Nav } from "../components/cinematic/Nav";
 import { Footer } from "../components/cinematic/Footer";
 import { FloatingSocials } from "../components/cinematic/FloatingSocials";
@@ -167,7 +167,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="havilah-theme">
-        <CinematicStartup />
+
         <SmoothScroll />
         <ParticleField />
         <Nav />
